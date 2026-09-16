@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>API Tester</title>
+<style>
+  body { font-family: sans-serif; background: #0f172a; color: #e2e8f0; padding: 15px; max-width: 800px; margin: 0 auto; }
+  .card { background: #1e293b; border: 1px solid #334155; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+  input, button { padding: 6px 10px; margin: 3px; border-radius: 4px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 0.75rem; }
+  button { background: #0284c7; color: white; font-weight: bold; cursor: pointer; border: none; }
+  pre { background: #090d16; padding: 10px; border-radius: 6px; color: #4ade80; overflow-x: auto; font-size: 0.75rem; }
+</style></head><body>
+  <h3 style="color:#38bdf8;">🚀 Laravel REST API Tester</h3>
+  <div class="card">
+    <input type="text" id="token" placeholder="Bearer Token (Otomatis terisi saat Login)" style="width: 70%;">
+    <input type="text" id="reg_name" value="Budi Santoso"> <input type="email" id="email" value="budi@gmail.com"> <input type="password" id="password" value="password123"><br>
+    <button onclick="sendReq('/register','POST',{name:document.getElementById('reg_name').value,email:document.getElementById('email').value,password:document.getElementById('password').value})">Register</button>
+    <button onclick="sendReq('/login','POST',{email:document.getElementById('email').value,password:document.getElementById('password').value},true)">Login</button>
+  </div>
+  <div class="card">
+    <input type="text" id="kt_nama" value="Ayu Pertiwi"> <input type="text" id="kt_alamat" value="Jl. Udayana"> <input type="date" id="kt_tgl" value="2001-05-15"> <input type="text" id="kt_phone" value="081234567890"><br>
+    <button onclick="sendReq('/kontak','GET',null,false,true)">Get Kontak</button>
+    <button onclick="sendReq('/kontak','POST',{nama:document.getElementById('kt_nama').value,alamat:document.getElementById('kt_alamat').value,tanggal_lahir:document.getElementById('kt_tgl').value,phones:[{jenis:'HP',nomor_telepon:document.getElementById('kt_phone').value}]},false,true)">Tambah Kontak</button>
+  </div>
+  <div class="card">
+    <div style="color:#f59e0b;font-weight:bold;margin-bottom:4px;">📝 Raw JSON Input</div>
+    <textarea id="raw_json" rows="6" style="width:100%;font-family:monospace;background:#090d16;color:#fff;border:1px solid #475569;border-radius:4px;padding:6px;font-size:0.7rem;" placeholder='{"nama":"Ayu Pertiwi","alamat":"Jl. Udayana","tanggal_lahir":"2001-05-15","phones":[{"jenis":"HP","nomor_telepon":"081234567890"}]}'></textarea><br>
+    <button onclick="sendReq('/kontak','POST',JSON.parse(document.getElementById('raw_json').value),false,true)">Send Raw JSON</button>
+  </div>
+  <div class="card"><pre id="out">Output Respon JSON...</pre></div>
+  <script>
+    async function sendReq(ep, m, body=null, isLogin=false, isAuth=false) {
+      const h = {'Accept':'application/json','Content-Type':'application/json'};
+      if(isAuth && document.getElementById('token').value) h['Authorization'] = 'Bearer ' + document.getElementById('token').value;
+      const r = await fetch('/api'+ep, {method:m, headers:h, body:body?JSON.stringify(body):null});
+      const d = await r.json(); document.getElementById('out').textContent = JSON.stringify(d, null, 2);
+      if(isLogin && d.token) document.getElementById('token').value = d.token;
+    }
+  </script></body></html>

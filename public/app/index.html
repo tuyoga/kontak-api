@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F3EA">
+  <title>Kontak - Your people, at hand</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#list" aria-label="Kontak home">
+        <span class="brand-mark">K</span>
+        <span>kontak</span>
+      </a>
+      <div class="header-actions" id="header-actions" hidden>
+        <span class="user-greeting" id="user-greeting"></span>
+        <button class="button button-secondary button-small" id="logout-button" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view auth-view" id="auth-view" aria-labelledby="auth-title">
+        <div class="auth-copy">
+          <p class="eyebrow">A softer way to stay connected</p>
+          <h1 id="auth-title">Keep your people close.</h1>
+          <p class="lead">A warm, simple home for the names, places, and numbers that matter.</p>
+        </div>
+        <div class="auth-card card">
+          <div class="auth-tabs" role="tablist" aria-label="Authentication">
+            <button class="auth-tab is-active" id="login-tab" type="button" role="tab" aria-selected="true">Log in</button>
+            <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false">Create account</button>
+          </div>
+          <form id="auth-form" novalidate>
+            <div class="field" id="name-field" hidden>
+              <label for="auth-name">Your name</label>
+              <input id="auth-name" name="name" type="text" autocomplete="name" placeholder="e.g. Sari Putri">
+            </div>
+            <div class="field">
+              <label for="auth-email">Email address</label>
+              <input id="auth-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="auth-password">Password</label>
+              <input id="auth-password" name="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" required>
+            </div>
+            <p class="form-error" id="auth-error" role="alert" hidden></p>
+            <button class="button button-primary button-full" id="auth-submit" type="submit">Log in</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="view app-view" id="list-view" aria-labelledby="list-title" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Your address book</p>
+            <h1 id="list-title">All contacts</h1>
+          </div>
+          <button class="button button-primary" id="add-contact-button" type="button"><span aria-hidden="true">+</span> Add kontak</button>
+        </div>
+        <div class="toolbar">
+          <label class="search-field" for="search-input">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="sr-only">Search contacts</span>
+            <input id="search-input" type="search" placeholder="Search by name or address...">
+          </label>
+          <span class="contact-count" id="contact-count"></span>
+        </div>
+        <div class="status-message" id="list-status" role="status" hidden></div>
+        <div class="contact-grid" id="contact-grid"></div>
+        <div class="empty-state card" id="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">✦</div>
+          <h2>No contacts yet</h2>
+          <p>Start your address book with someone important.</p>
+          <button class="button button-primary" type="button" data-empty-add>Add your first kontak</button>
+        </div>
+      </section>
+
+      <section class="view app-view form-view" id="form-view" aria-labelledby="form-title" hidden>
+        <button class="back-link" id="back-to-list" type="button"><span aria-hidden="true">←</span> Back to contacts</button>
+        <div class="form-heading">
+          <p class="eyebrow" id="form-eyebrow">New entry</p>
+          <h1 id="form-title">Add a kontak</h1>
+          <p class="lead">Keep the details you reach for most in one place.</p>
+        </div>
+        <form class="contact-form card" id="contact-form" novalidate>
+          <div class="form-section">
+            <h2>About them</h2>
+            <div class="form-fields">
+              <div class="field">
+                <label for="contact-name">Nama</label>
+                <input id="contact-name" name="nama" type="text" placeholder="Full name" required>
+              </div>
+              <div class="field">
+                <label for="contact-address">Alamat</label>
+                <input id="contact-address" name="alamat" type="text" placeholder="Home or work address" required>
+              </div>
+              <div class="field">
+                <label for="contact-birthday">Tanggal lahir</label>
+                <input id="contact-birthday" name="tanggal_lahir" type="date" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-section phone-section">
+            <div class="section-heading-row">
+              <div>
+                <h2>Phone numbers</h2>
+                <p class="section-note" id="phone-note">Add every number you might need.</p>
+              </div>
+              <button class="button button-tertiary button-small" id="add-phone-button" type="button"><span aria-hidden="true">+</span> Add number</button>
+            </div>
+            <div class="phone-list" id="phone-list"></div>
+          </div>
+          <p class="form-error" id="contact-error" role="alert" hidden></p>
+          <div class="form-actions">
+            <button class="button button-secondary" id="cancel-form" type="button">Cancel</button>
+            <button class="button button-primary" id="save-contact" type="submit">Save kontak</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
